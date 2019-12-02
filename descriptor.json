@@ -7,7 +7,7 @@
   "homepage": "https://github.com/project-flogo/tree/master/examples/activity",
   "settings": [
     {
-      "name": "aSetting",
+      "name": "connectionString",
       "type": "string",
       "required": true
     }

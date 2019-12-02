@@ -3,7 +3,7 @@ package sample
 import "github.com/project-flogo/core/data/coerce"
 
 type Settings struct {
-	ASetting string `md:"aSetting,required"`
+	ConnectionString string `md:"connectionString,required"`
 }
 
 type Input struct {
