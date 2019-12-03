@@ -19,13 +19,15 @@ var activityMd = activity.ToMetadata(&Settings{}, &Input{}, &Output{})
 
 //New optional factory method, should be used if one activity instance per configuration is desired
 func New(ctx activity.InitContext) (activity.Activity, error) {
+	fmt.Println("Printing optional factory")
+	ctx.Logger().Debugf("Optional factory called")
 
 	s := &Settings{}
 	err := metadata.MapToStruct(ctx.Settings(), s, true)
 	if err != nil {
 		return nil, err
 	}
-
+	fmt.Println("Setting: %s" + s.ConnectionString)
 	ctx.Logger().Debugf("Setting: %s", s.ConnectionString)
 
 	// Set client options
@@ -36,6 +38,7 @@ func New(ctx activity.InitContext) (activity.Activity, error) {
 
 	if err != nil {
 		log.Fatal(err)
+		println(err)
 	}
 
 	// Check the connection
