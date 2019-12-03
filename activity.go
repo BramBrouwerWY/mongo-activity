@@ -2,7 +2,6 @@ package sample
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"github.com/project-flogo/core/activity"
@@ -19,17 +18,16 @@ var activityMd = activity.ToMetadata(&Settings{}, &Input{}, &Output{})
 
 //New optional factory method, should be used if one activity instance per configuration is desired
 func New(ctx activity.InitContext) (activity.Activity, error) {
-	log.Print("Logging in Go!1")
-	fmt.Println("Printing optional factory")
-	ctx.Logger().Debugf("Optional factory called")
+
+	log.Print("Optional factory called")
 
 	s := &Settings{}
 	err := metadata.MapToStruct(ctx.Settings(), s, true)
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println("Setting: %s" + s.ConnectionString)
-	ctx.Logger().Debugf("Setting: %s", s.ConnectionString)
+
+	log.Print("Setting: %s " + s.ConnectionString)
 
 	// Set client options
 	clientOptions := options.Client().ApplyURI("mongodb://localhost:27017")
@@ -39,7 +37,7 @@ func New(ctx activity.InitContext) (activity.Activity, error) {
 
 	if err != nil {
 		log.Fatal(err)
-		println(err)
+		log.Print(err)
 	}
 
 	// Check the connection
@@ -47,10 +45,10 @@ func New(ctx activity.InitContext) (activity.Activity, error) {
 
 	if err != nil {
 		log.Fatal(err)
+		log.Print(err)
 	}
 
-	fmt.Println("Connected to MongoDB!")
-	log.Print("Logging in Go!2")
+	log.Print("Connected to MongoDB!")
 
 	act := &Activity{} //add ConnectionString to instance
 
@@ -75,8 +73,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 
-	ctx.Logger().Debugf("Input: %s", input.AnInput)
-	log.Print("Logging in Go!3")
+	log.Print("Input: %s " + input.AnInput)
 
 	output := &Output{AnOutput: input.AnInput}
 	err = ctx.SetOutputObject(output)
