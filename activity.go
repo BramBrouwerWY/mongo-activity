@@ -19,6 +19,7 @@ var activityMd = activity.ToMetadata(&Settings{}, &Input{}, &Output{})
 
 //New optional factory method, should be used if one activity instance per configuration is desired
 func New(ctx activity.InitContext) (activity.Activity, error) {
+	log.Print("Logging in Go!1")
 	fmt.Println("Printing optional factory")
 	ctx.Logger().Debugf("Optional factory called")
 
@@ -49,6 +50,7 @@ func New(ctx activity.InitContext) (activity.Activity, error) {
 	}
 
 	fmt.Println("Connected to MongoDB!")
+	log.Print("Logging in Go!2")
 
 	act := &Activity{} //add ConnectionString to instance
 
@@ -74,6 +76,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	}
 
 	ctx.Logger().Debugf("Input: %s", input.AnInput)
+	log.Print("Logging in Go!3")
 
 	output := &Output{AnOutput: input.AnInput}
 	err = ctx.SetOutputObject(output)
